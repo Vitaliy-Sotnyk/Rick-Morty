@@ -1,0 +1,425 @@
+$main-value: 4px;
+$value-persent: 5%;
+$color-grey-middle: rgba(0, 0, 0, 0.5);
+$color-lightgrey: rgb(242, 242, 247);
+$color-grey: rgb(142, 142, 147);
+$first-shadow: 0 2px 4px rgba(0, 0, 0, 0.14);
+$second-shadow: 0 6px 4px rgba(0, 0, 0, 0.12);
+$third-shadow: 0 5px 7px rgba(0, 0, 0, 0.2);
+$color-green: #8AFD74;
+$color-blue: #00B0C8;
+$color-darkblue: #003C48;
+$color-white: white;
+
+@mixin flexDispley($direction, $justify) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: center;
+}
+@mixin widthHeight($width, $height){
+  width: $width;
+  height: $height;
+}
+@mixin teleportAnimationElement($opacity, $transform, $right){
+  opacity: $opacity;
+  transform:  $transform;
+  right: $right;
+}
+@mixin teleportAnimation($maxHeight, $opacity){
+  animation: rotation 3s linear infinite;
+  transition: .5s;
+  max-height: $maxHeight;
+  opacity: $opacity;
+}
+@mixin sunMoonColor($color){
+  content: '';
+  position: absolute;
+  width: $value-persent*6;
+  height: $value-persent*6;
+  box-shadow: 0 0 $main-value*7 $main-value*5 $color;
+}
+
+.Path {
+  @include flexDispley(row, space-around);
+}
+.Path#light{
+    background-color: $color-white;
+    .form{
+      background: $color-white;
+      background: linear-gradient(180deg, $color-white 0%, $color-white 70%, rgba(255,255,255,0) 100%);
+      #filter {
+        background: $color-white;
+        border: 1px solid $color-grey-middle;
+      }
+    }
+    .main-section{
+      &__person-list__info {
+        background-color: $color-white;
+      }
+    }
+    
+}
+.Path#dark{
+    background-color: $color-darkblue;
+    .form{
+      background: $color-darkblue;
+      background: linear-gradient(180deg, $color-darkblue 0%, $color-darkblue 70%, rgba(255,255,255,0) 100%);
+      #filter {
+        background: $color-darkblue;
+        border: 1px solid $color-grey;
+        color: $color-white;
+      }
+      svg{
+        path{
+          fill: $color-white;
+          fill-opacity: 0.8;
+        }
+      }
+    }
+    .main-section{
+      &__person-list__info {
+        background-color: $color-darkblue;
+      }
+    }
+    .section-person{
+      svg{
+        path{
+          fill: $color-white;
+        }
+      }
+    }
+}
+
+.container {
+  box-sizing: border-box;
+  margin: auto;
+  position: relative;
+  @include widthHeight(100%, auto);
+  
+  @media(min-width: 320px) {
+    margin: 0 $value-persent*1.25;
+    min-width: $main-value * 78;
+    max-width: $main-value * 150;
+  }
+  @media(min-width: 769px) {
+    margin: 0 $value-persent*3;
+    min-width: $main-value * 180;
+    max-width: $main-value * 350;
+  }
+
+}
+
+.header {
+  @include flexDispley(column, space-around);
+  @include widthHeight(100%, 100%);
+  margin: $main-value*22 0 0;
+
+  svg {
+    min-width: $main-value*50;
+    max-width: $main-value*150;
+    @include widthHeight(100%, auto)
+  }
+}
+
+.form {
+  padding: $main-value*4 $main-value*1.5 $main-value*8;
+  margin: $main-value*4 $main-value*-1.5 0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  &__wrapper {
+    @include widthHeight(100%, 100%);
+    position: relative;
+
+    #filter {
+      box-sizing: border-box;
+      border-radius: $main-value * 2;
+      padding: $main-value * 4 $main-value * 4 $main-value * 4 $main-value * 12;
+      @include widthHeight(100%, 100%);
+    }
+
+    #submit {
+      display: none;
+    }
+
+    &__searchButton,
+    &__user {
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+    }
+
+    &__searchButton {
+      left:  $main-value*5;
+
+      svg {
+        display: block;
+      }
+    }
+
+    &__user {
+      right:  $main-value*5;
+
+      img {
+        max-width:  $main-value*7.5;
+      }
+    }
+  }
+}
+
+.errorSearch{
+  @include widthHeight(100%, 100%);
+  text-align: center;
+}
+
+.main-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: $main-value*8;
+  margin: 0 0 $main-value*10;
+
+  &__person-list {
+    border-radius: $main-value;
+    @include widthHeight(100%, 100%);
+    overflow: hidden;
+
+    box-shadow: $third-shadow, $second-shadow, $first-shadow;
+
+    &__info {
+      position: relative;
+      box-sizing: border-box;
+      padding: $main-value * 3 $main-value * 4;
+      z-index: 2;
+    }
+
+    img {
+      display: block;
+      margin: $value-persent*-2.5 0;
+      object-fit: cover;
+      @include widthHeight(100%, 100%);
+      height: auto;
+      z-index: 1;
+      position: relative;
+
+    }
+  }
+
+  @media (min-width: 501px) {
+    grid-template-columns:  1fr 1fr;
+  }
+  @media (min-width: 769px) {
+    grid-template-columns:  1fr 1fr 1fr;
+    margin: $main-value*7.5 0 $main-value*10;
+  }
+  @media (min-width: 1601px) {
+    grid-template-columns:  1fr 1fr 1fr 1fr;
+  }
+}
+
+.main-buttons{
+  @include flexDispley(column, space-around);
+
+  &__scroll-to-top{
+    @include widthHeight($main-value*10, $main-value*10);
+    background-color: $color-blue;
+    border: 1px solid $color-darkblue;
+    box-shadow: 0 0 $main-value*3 calc($main-value/2) $color-green;
+    border-radius: 50%;
+    bottom: $main-value*5;
+    right: $main-value*5;
+    position: fixed;
+    transition: .5s;
+    z-index: 99;
+
+    &::after{
+      content: '';
+      position: absolute;
+      display: block;
+      @include widthHeight($main-value*4, $main-value*4);
+      border-radius:$main-value 0 ;
+      border-left:$main-value solid $color-white;
+      border-top:$main-value solid $color-white;
+      transform: rotate(45deg);
+      top: $main-value*3.5;
+      left: $main-value*2.25;
+    }
+    &:hover{
+      box-shadow: 0 0 $main-value*3 $main-value*1.5 $color-green;
+    }
+  }
+  &__load-more{
+    @include widthHeight($main-value*40, $main-value*10);
+    background-color: $color-blue;
+    border: 1px solid $color-darkblue;
+    box-shadow: 0 0 $main-value*3 calc($main-value/2) $color-green;
+    color: $color-white;
+    margin: 0 0 $main-value * 10;
+  }
+}
+
+.section-person {
+    @include flexDispley(column, space-around);
+    min-height: 100vh;
+    
+    button {
+      @include flexDispley(row, space-around);
+      justify-content: start;
+      width: $main-value * 27;
+      position: absolute;
+      left: 0;
+      top: $main-value *6;
+      border: none;
+      background: none;
+      padding: 0;
+  
+      svg {
+        padding: $main-value;
+        margin-right: $main-value*2;
+      }
+  
+      span {
+        display: inline;
+        width: 76px;
+        max-width: 76px;
+        transform: scaleX(0.89);
+        white-space: nowrap;
+        margin: 0 $main-value *-1;
+      }
+    }
+  
+    &__info{
+      @include widthHeight(100%, 100%);
+  
+      &__main{
+        @include flexDispley(column, space-around);
+        margin: $main-value*8.5 0;
+  
+        img{
+          border: 5px solid $color-blue;
+          box-shadow:0 0 7px 1px $color-darkblue, 0 0 15px $color-green;
+          border-radius: 50%;
+          object-fit: cover;
+          height: auto;
+          max-width: 200px;
+  
+        }
+        h2{
+          margin: $main-value*2.5 0 0;
+
+
+          @media (min-width: 769px) {
+            margin: $main-value*7.5 0 0;
+          }
+        }
+      
+      }
+      &__details{
+        @include flexDispley(column, space-around);
+
+        h3{
+          line-height: 24px;
+          color: $color-grey;
+          max-width: $main-value*103;
+          text-align: center;
+          @include widthHeight(100%, 100%);
+          
+          @media (min-width: 769px) {
+            text-align: start;
+          }
+        }
+        ul{
+          margin: $main-value*4 $main-value*2 0 $main-value*4;
+          min-width: $main-value*78;
+          @include widthHeight(100%, 100%);
+          max-width: $main-value*103;
+  
+        }
+        li{
+          padding: $main-value*2 0 $main-value*3;
+        }
+      }
+    }
+}
+
+.section-color-selector{
+  @include widthHeight(auto, $main-value*15);
+  @include flexDispley(row, space-between);
+  position: absolute;
+  top: $main-value*4;
+  right: $main-value*2;
+  box-sizing: border-box;
+  padding: 0 $main-value*15;
+
+  &__teleport{
+    position: relative;
+    @include teleportAnimation($main-value*15, 1);
+
+    &-hidden{
+    @include teleportAnimation($main-value*15, 0)
+    }
+
+    @media (min-width: 769px) {
+      @include teleportAnimation($main-value*10, 1);
+
+      &-hidden{
+        @include teleportAnimation($main-value*10, 0)
+        }
+    }
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 
+
+  & > div{
+    position: absolute;
+    @include flexDispley(row, space-around);
+    @include widthHeight(min-content, min-content);
+    transition: 1s;
+
+    img{
+      max-height: $main-value*10;
+      transform: scaleX(-1);
+      @include widthHeight(auto, 100%);
+      
+      @media (min-width: 769px) {
+        max-height: $main-value*12;
+      }
+    }
+    &::before{
+      border-radius: 50%;
+    }
+  }
+  &__sun{
+    @include teleportAnimationElement(0, 0.5, $main-value*20);
+  }
+  &__moon{
+    @include teleportAnimationElement(0, 0.5, $main-value*20);
+
+  }
+}
+
+.coming{  
+  &-moon{
+    @include teleportAnimationElement(1, 1, 0);
+    
+    &::before{
+      @include sunMoonColor($color-blue);
+    }
+  }
+  &-sun{
+    @include teleportAnimationElement(1, 1, 0);
+
+    &::before{
+      @include sunMoonColor(yellow);
+    }
+  }
+}
+
