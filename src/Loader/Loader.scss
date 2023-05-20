@@ -1,0 +1,47 @@
+$color-green: #8AFD74;
+$color-blue: #00B0C8;
+$main-value: 4px;
+$value-persent: 5%;
+
+@mixin loaderProperty($animation){
+    width: $main-value*15;
+    height: $main-value*15;
+    border-radius: $value-persent*10;
+    box-sizing: border-box;
+    animation: rotation $animation;
+}
+
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: $value-persent;
+  height: 50vh;
+  max-height: $value-persent*10;
+
+  &__animation {
+    display: flex;
+    border-top: $main-value solid $color-blue;
+    border-right: $main-value solid transparent;
+    margin: 0;
+    @include loaderProperty(1s linear infinite);
+    
+    &::after {
+        content: '';  
+        position: absolute;
+        left: 0;
+        top: 0;
+        border-left: $main-value solid $color-green;
+        border-bottom: $main-value solid transparent;
+        @include loaderProperty(0.5s linear infinite reverse);
+      }
+  }
+}
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 

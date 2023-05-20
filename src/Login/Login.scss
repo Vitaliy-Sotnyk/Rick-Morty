@@ -1,0 +1,26 @@
+.login-wrapper{
+    position: absolute;
+    height: 100vh;
+    z-index: 999;
+
+    &__LoginGoogle{
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+    }
+}
+.exitButton{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding: 0;
+    width: auto;
+    border: none;
+    background: none;
+    transform: rotate(180deg);
+    h2{
+        transform: scaleX(1.4);
+        margin: 0;
+        line-height: 32px;
+    }
+}
